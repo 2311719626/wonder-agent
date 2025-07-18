@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class WonderAgentApplication {
+public class AgentApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(WonderAgentApplication.class, args);
+        SpringApplication.run(AgentApplication.class, args);
     }
 
 }
