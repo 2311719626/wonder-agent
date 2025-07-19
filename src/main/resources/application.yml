@@ -1,6 +1,8 @@
 spring:
   application:
     name: agent
+  profiles:
+    active: local
 server:
   servlet:
     context-path: /api

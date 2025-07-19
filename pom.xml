@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.3</version>
+        <version>3.4.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.hezhaohui</groupId>
@@ -35,6 +35,12 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.alibaba.cloud.ai</groupId>
+            <artifactId>spring-ai-alibaba-starter</artifactId>
+            <version>1.0.0-M6.1</version>
+        </dependency>
+
         <!-- hutool-->
         <dependency>
             <groupId>cn.hutool</groupId>
@@ -62,6 +68,18 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
 
     <build>
         <plugins>
