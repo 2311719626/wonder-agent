@@ -1,12 +1,12 @@
 package com.hezhaohui.agent.app;
 
 import com.hezhaohui.agent.advisor.LoggerAdvisor;
+import com.hezhaohui.agent.chatmemory.FileBasedChatMemory;
 import io.swagger.v3.core.filter.SpecFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
-import org.springframework.ai.chat.memory.InMemoryChatMemory;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.stereotype.Service;
@@ -38,7 +38,8 @@ public class StudyApp {
     }
 
     public StudyApp(ChatModel dashscopeChatModel, SpecFilter specFilter) {
-        ChatMemory chatMemory = new InMemoryChatMemory();
+        String fileDir = System.getProperty("user.dir") + "/tmp/chat-memory";
+        ChatMemory chatMemory = new FileBasedChatMemory(fileDir);
         this.chatClient = ChatClient.builder(dashscopeChatModel)
                 .defaultSystem(SYSTEM_PROMPT)
                 .defaultAdvisors(
