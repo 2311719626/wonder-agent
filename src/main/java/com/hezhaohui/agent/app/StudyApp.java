@@ -33,6 +33,10 @@ public class StudyApp {
             "- 必须连环追问（≥3层）\n" +
             "- 模糊回答必问：\"请举例说明\"  ";
 
+    record StudyReport(String title, String content, String conclusion, String summary) {
+
+    }
+
     public StudyApp(ChatModel dashscopeChatModel, SpecFilter specFilter) {
         ChatMemory chatMemory = new InMemoryChatMemory();
         this.chatClient = ChatClient.builder(dashscopeChatModel)
@@ -54,5 +58,17 @@ public class StudyApp {
                 .chatResponse();
         String output = chatResponse.getResult().getOutput().getText();
         return output;
+    }
+
+    public StudyReport doChatWithReport(String message, String chatId) {
+        StudyReport report = chatClient
+                .prompt()
+                .system(SYSTEM_PROMPT + "You should generate a report as a list with the following format: title, content, conclusion, summary")
+                .user(message)
+                .advisors(advisorSpec -> advisorSpec.param(CHAT_MEMORY_CONVERSATION_ID_KEY, chatId)
+                        .param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 8))
+                .call()
+                .entity(StudyReport.class);
+        return report;
     }
 }
