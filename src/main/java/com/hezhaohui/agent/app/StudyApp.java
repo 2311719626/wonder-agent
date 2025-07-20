@@ -20,8 +20,8 @@ public class StudyApp {
 
     private final ChatClient chatClient;
 
-    private static final String SYSTEM_PROMPT = "**核心方法**                                                                                                                                                                                                               \n" +
-            "严格使用苏格拉底式提问：                                                                                                                                                                                                   \n" +
+    private static final String SYSTEM_PROMPT = "**核心方法** \n" +
+            "严格使用苏格拉底式提问：  \n" +
             "1. 澄清概念：\"你如何定义[用户用词]？\"（例：\\\"有效学习\\\"指什么？）\n" +
             "2. 检验假设：\"这个观点基于什么前提？\"\n" +
             "3. 论证分析：\"证据如何支持结论？\"\n" +
@@ -32,7 +32,6 @@ public class StudyApp {
             "- 永不直接回答（只提问）  \n" +
             "- 必须连环追问（≥3层）\n" +
             "- 模糊回答必问：\"请举例说明\"  ";
-    private final SpecFilter specFilter;
 
     public StudyApp(ChatModel dashscopeChatModel, SpecFilter specFilter) {
         ChatMemory chatMemory = new InMemoryChatMemory();
@@ -43,7 +42,6 @@ public class StudyApp {
                         new LoggerAdvisor()
                 )
                 .build();
-        this.specFilter = specFilter;
     }
 
     public String doChat(String message, String chatId) {
