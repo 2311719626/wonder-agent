@@ -4,6 +4,7 @@ import io.swagger.v3.core.filter.SpecFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
+import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.memory.InMemoryChatMemory;
 import org.springframework.ai.chat.model.ChatModel;
@@ -38,7 +39,8 @@ public class StudyApp {
         this.chatClient = ChatClient.builder(dashscopeChatModel)
                 .defaultSystem(SYSTEM_PROMPT)
                 .defaultAdvisors(
-                        new MessageChatMemoryAdvisor(chatMemory)
+                        new MessageChatMemoryAdvisor(chatMemory),
+                        new SimpleLoggerAdvisor()
                 )
                 .build();
         this.specFilter = specFilter;
@@ -53,7 +55,6 @@ public class StudyApp {
                 .call()
                 .chatResponse();
         String output = chatResponse.getResult().getOutput().getText();
-        log.info("output:{}", output);
         return output;
     }
 }
