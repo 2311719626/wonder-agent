@@ -1,10 +1,10 @@
 package com.hezhaohui.agent.app;
 
+import com.hezhaohui.agent.advisor.LoggerAdvisor;
 import io.swagger.v3.core.filter.SpecFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
-import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.memory.InMemoryChatMemory;
 import org.springframework.ai.chat.model.ChatModel;
@@ -40,7 +40,7 @@ public class StudyApp {
                 .defaultSystem(SYSTEM_PROMPT)
                 .defaultAdvisors(
                         new MessageChatMemoryAdvisor(chatMemory),
-                        new SimpleLoggerAdvisor()
+                        new LoggerAdvisor()
                 )
                 .build();
         this.specFilter = specFilter;
