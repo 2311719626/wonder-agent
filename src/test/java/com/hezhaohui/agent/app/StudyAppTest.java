@@ -40,4 +40,12 @@ class StudyAppTest {
         assertNotNull(report.conclusion());
         assertNotNull(report.summary());
     }
+
+    @Test
+    void doChatWithRag() {
+        String chatId = UUID.randomUUID().toString();
+        String message = "How to study?";
+        String output = studyApp.doChatWithRag(message, chatId);
+        assertNotNull(output);
+    }
 }

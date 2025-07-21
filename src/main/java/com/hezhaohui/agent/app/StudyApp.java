@@ -3,12 +3,15 @@ package com.hezhaohui.agent.app;
 import com.hezhaohui.agent.advisor.LoggerAdvisor;
 import com.hezhaohui.agent.chatmemory.FileBasedChatMemory;
 import io.swagger.v3.core.filter.SpecFilter;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
+import org.springframework.ai.chat.client.advisor.QuestionAnswerAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.model.ChatResponse;
+import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.stereotype.Service;
 
 import static org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvisor.CHAT_MEMORY_CONVERSATION_ID_KEY;
@@ -36,6 +39,9 @@ public class StudyApp {
     record StudyReport(String title, String content, String conclusion, String summary) {
 
     }
+
+    @Resource
+    private VectorStore vectorStore;
 
     public StudyApp(ChatModel dashscopeChatModel, SpecFilter specFilter) {
         String fileDir = System.getProperty("user.dir") + "/tmp/chat-memory";
@@ -71,5 +77,19 @@ public class StudyApp {
                 .call()
                 .entity(StudyReport.class);
         return report;
+    }
+
+    public String doChatWithRag(String message, String chatId) {
+        ChatResponse chatResponse = chatClient
+                .prompt()
+                .user(message)
+                .advisors(advisorSpec -> advisorSpec.param(CHAT_MEMORY_CONVERSATION_ID_KEY, chatId)
+                        .param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 8))
+                .advisors(new LoggerAdvisor())
+                .advisors(new QuestionAnswerAdvisor(vectorStore))
+                .call()
+                .chatResponse();
+        String output = chatResponse.getResult().getOutput().getText();
+        return output;
     }
 }
