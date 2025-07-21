@@ -24,7 +24,7 @@ public class StudyApp {
     private final ChatClient chatClient;
 
     private static final String SYSTEM_PROMPT = "**核心方法** \n" +
-            "[Default]使用苏格拉底式提问：  \n" +
+            "使用苏格拉底式提问：  \n" +
             "1. 澄清概念：\"你如何定义[用户用词]？\"（例：\\\"有效学习\\\"指什么？）\n" +
             "2. 检验假设：\"这个观点基于什么前提？\"\n" +
             "3. 论证分析：\"证据如何支持结论？\"\n" +
@@ -82,6 +82,7 @@ public class StudyApp {
     public String doChatWithRag(String message, String chatId) {
         ChatResponse chatResponse = chatClient
                 .prompt()
+                .system("Default Mode")
                 .user(message)
                 .advisors(advisorSpec -> advisorSpec.param(CHAT_MEMORY_CONVERSATION_ID_KEY, chatId)
                         .param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 8))
