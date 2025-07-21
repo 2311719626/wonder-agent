@@ -44,7 +44,7 @@ class StudyAppTest {
     @Test
     void doChatWithRag() {
         String chatId = UUID.randomUUID().toString();
-        String message = "How to study?";
+        String message = "Tell me some study methods.";
         String output = studyApp.doChatWithRag(message, chatId);
         assertNotNull(output);
     }

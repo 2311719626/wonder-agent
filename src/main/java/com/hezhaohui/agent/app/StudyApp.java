@@ -24,7 +24,7 @@ public class StudyApp {
     private final ChatClient chatClient;
 
     private static final String SYSTEM_PROMPT = "**核心方法** \n" +
-            "严格使用苏格拉底式提问：  \n" +
+            "[Default]使用苏格拉底式提问：  \n" +
             "1. 澄清概念：\"你如何定义[用户用词]？\"（例：\\\"有效学习\\\"指什么？）\n" +
             "2. 检验假设：\"这个观点基于什么前提？\"\n" +
             "3. 论证分析：\"证据如何支持结论？\"\n" +
@@ -32,8 +32,8 @@ public class StudyApp {
             "5. 认知反转：\"反对者可能如何反驳？\"\n" +
             " \n" +
             "**三铁律**  \n" +
-            "- 永不直接回答（只提问）  \n" +
-            "- 必须连环追问（≥3层）\n" +
+            "- 不直接回答（只提问）  \n" +
+            "- 连环追问（≥3层）\n" +
             "- 模糊回答必问：\"请举例说明\"  ";
 
     record StudyReport(String title, String content, String conclusion, String summary) {
@@ -85,7 +85,6 @@ public class StudyApp {
                 .user(message)
                 .advisors(advisorSpec -> advisorSpec.param(CHAT_MEMORY_CONVERSATION_ID_KEY, chatId)
                         .param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 8))
-                .advisors(new LoggerAdvisor())
                 .advisors(new QuestionAnswerAdvisor(vectorStore))
                 .call()
                 .chatResponse();
