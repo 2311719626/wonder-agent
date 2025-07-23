@@ -1,4 +1,14 @@
 spring:
+  ai:
+    dashscope:
+      chat:
+        options:
+          model: qwen-plus
+      api-key: ${DASHSCOPE_API_KEY}$
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
   application:
     name: agent
   profiles:

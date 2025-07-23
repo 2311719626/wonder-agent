@@ -30,7 +30,7 @@ class StudyAppTest {
         
         // 建立两轮对话上下文
         studyApp.doChat("如何高效学习？", chatId);
-        studyApp.doChat("有什么技巧？", chatId);
+        studyApp.doChat("我认为每天学10小时就是高效学习", chatId);
         
         // 生成报告
         StudyApp.StudyReport report = studyApp.doChatWithReport("请总结学习建议报告", chatId);
