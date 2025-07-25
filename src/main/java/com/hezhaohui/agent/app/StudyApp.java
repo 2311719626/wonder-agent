@@ -2,7 +2,6 @@ package com.hezhaohui.agent.app;
 
 import com.hezhaohui.agent.advisor.LoggerAdvisor;
 import com.hezhaohui.agent.chatmemory.FileBasedChatMemory;
-import io.swagger.v3.core.filter.SpecFilter;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
@@ -41,7 +40,7 @@ public class StudyApp {
     }
 
     @Resource
-    private VectorStore vectorStore;
+    private VectorStore pgVectorVectorStore;
 
     public StudyApp(ChatModel dashscopeChatModel) {
         String fileDir = System.getProperty("user.dir") + "/tmp/chat-memory";
@@ -86,7 +85,7 @@ public class StudyApp {
                 .user(message)
                 .advisors(advisorSpec -> advisorSpec.param(CHAT_MEMORY_CONVERSATION_ID_KEY, chatId)
                         .param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 8))
-                .advisors(new QuestionAnswerAdvisor(vectorStore))
+                .advisors(new QuestionAnswerAdvisor(pgVectorVectorStore))
                 .call()
                 .chatResponse();
         String output = chatResponse.getResult().getOutput().getText();
