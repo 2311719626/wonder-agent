@@ -43,7 +43,7 @@ public class StudyApp {
     @Resource
     private VectorStore vectorStore;
 
-    public StudyApp(ChatModel dashscopeChatModel, SpecFilter specFilter) {
+    public StudyApp(ChatModel dashscopeChatModel) {
         String fileDir = System.getProperty("user.dir") + "/tmp/chat-memory";
         ChatMemory chatMemory = new FileBasedChatMemory(fileDir);
         this.chatClient = ChatClient.builder(dashscopeChatModel)
