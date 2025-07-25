@@ -18,6 +18,7 @@ public class LoggerAdvisor implements CallAroundAdvisor, StreamAroundAdvisor {
 
     private AdvisedRequest before(AdvisedRequest request) {
         log.info("AI Request: {}", request.userText());
+        log.info("Documents: {}",request.adviseContext().get("qa_retrieved_documents"));
         return request;
     }
 
