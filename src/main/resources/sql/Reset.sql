@@ -1,0 +1,1 @@
+TRUNCATE TABLE agent.vector_store;
