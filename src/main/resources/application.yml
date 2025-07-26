@@ -16,6 +16,8 @@ spring:
 server:
   servlet:
     context-path: /api
+upload:
+  path: tmp/document
 
 # springdoc-openapi
 springdoc:
